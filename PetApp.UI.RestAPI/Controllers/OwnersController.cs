@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.ApplicationService;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,7 @@ namespace PetApp.UI.RestAPI.Controllers
         }
 
         // GET api/owners
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Owner>> Get([FromQuery] Filter filter)
         {
@@ -43,6 +45,7 @@ namespace PetApp.UI.RestAPI.Controllers
         }
 
         // POST api/owners
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<Owner> Post([FromBody] Owner owner)
         {
@@ -57,6 +60,7 @@ namespace PetApp.UI.RestAPI.Controllers
         }
 
         // GET api/owners/5
+        [Authorize(Roles = "Administrator")]
         [HttpGet("{id}")]
         public ActionResult<Owner> Get(int id)
         {
@@ -71,6 +75,7 @@ namespace PetApp.UI.RestAPI.Controllers
         }
 
         // PUT api/owners/5
+        [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
         public Owner Put(int id, [FromBody] Owner owner)
         {
@@ -78,6 +83,7 @@ namespace PetApp.UI.RestAPI.Controllers
         }
 
         // DELETE api/owenrs/5
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

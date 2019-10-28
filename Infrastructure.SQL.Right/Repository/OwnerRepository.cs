@@ -30,6 +30,15 @@ namespace Infrastructure.SQL.Repository
                 //Include(o => o.OwnedPets).ThenInclude(o => o.Pet).ToList();
         }
 
+        public Owner GetOwner(int id)
+        {
+            return _context.Owners.
+                Include(o => o.User).
+                Include(o => o.OwnedPets).
+                ThenInclude(op => op.Pet).
+                FirstOrDefault(o => o.Id == id);
+        }
+
         public Owner CreateOwner(Owner owner)
         {
             _context.Attach(owner).State = EntityState.Added;

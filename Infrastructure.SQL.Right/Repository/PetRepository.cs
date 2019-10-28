@@ -29,6 +29,14 @@ namespace Infrastructure.SQL.Right.Repository
                 //Include(o => o.PreviousOwners).ThenInclude(o => o.Owner).ToList();
         }
 
+        public Pet GetPet(int id)
+        {
+            return _context.Pets.
+                Include(p => p.PreviousOwners).
+                ThenInclude(po => po.Owner).
+                FirstOrDefault(p => p.ID == id);
+        }
+
         public Pet CreatePet(Pet pet)
         {
 

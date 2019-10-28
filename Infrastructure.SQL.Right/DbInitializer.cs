@@ -44,7 +44,43 @@ namespace Infrastructure.SQL.Right
                 }
             }).Entity;
 
+            string password = "1234";
+            byte[] passwordHashUserOne, passwordSaltUserOne, passwordHashUserTwo, passwordSaltUserTwo;
+
+            CreatePasswordHash(password, out passwordHashUserOne, out passwordSaltUserOne);
+            CreatePasswordHash(password, out passwordHashUserTwo, out passwordSaltUserTwo);
+            
+
+            var user1 = ctx.Users.Add(new User()
+            {
+                Username = "Non-AdminUser",
+                PasswordHash = passwordHashUserOne,
+                PasswordSalt = passwordSaltUserOne,
+                IsAdmin = false,
+                Owner = owner1,
+                OwnerRef = owner1.Id
+            }).Entity;
+
+            var user2 = ctx.Users.Add(new User()
+            {
+                Username = "AdminUser",
+                PasswordHash = passwordHashUserTwo,
+                PasswordSalt = passwordSaltUserTwo,
+                IsAdmin = true,
+                Owner = owner2,
+                OwnerRef = owner2.Id
+            }).Entity;
+
             ctx.SaveChanges();
+        }
+
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
         }
     }
 }

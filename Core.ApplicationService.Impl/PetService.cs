@@ -23,7 +23,7 @@ namespace Core.ApplicationService.Impl
 
         public Pet GetPet(int id)
         {
-            Pet thePet = petRepository.GetAllPets().FirstOrDefault(pet => pet.ID == id);
+            Pet thePet = petRepository.GetPet(id);
             if (thePet == null)
             {
                 throw new System.NullReferenceException();

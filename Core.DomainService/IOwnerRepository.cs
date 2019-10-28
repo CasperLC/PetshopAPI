@@ -9,6 +9,8 @@ namespace Core.DomainService
     {
         List<Owner> GetAllOwners(Filter filter = null);
 
+        Owner GetOwner(int id);
+
         Owner CreateOwner(Owner owner);
 
         Owner RemoveOwner(int Id);

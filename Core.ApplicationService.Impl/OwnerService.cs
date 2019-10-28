@@ -24,7 +24,7 @@ namespace Core.ApplicationService.Impl
 
         public Owner GetOwner(int id)
         {
-            Owner theOwner = _ownerRepository.GetAllOwners().FirstOrDefault(owner => owner.Id == id);
+            Owner theOwner = _ownerRepository.GetOwner(id);
             if (theOwner == null)
             {
                 throw new System.NullReferenceException();
